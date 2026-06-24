@@ -48,6 +48,7 @@ MongoDB (local or MongoDB Atlas).
 bash
 git clone https://github.com/Aathimahalakshmi456/CodeAlpha_SocialMediaPlatform.git
 cd CodeAlpha_SocialMediaPlatform
+
 2️⃣ Backend setup
 bash
 cd backend
@@ -64,6 +65,7 @@ bash
 npm start
 # or
 npm run dev
+
 3️⃣ Frontend setup
 bash
 cd ../frontend
