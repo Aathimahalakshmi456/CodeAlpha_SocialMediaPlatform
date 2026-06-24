@@ -74,26 +74,37 @@ npm start
 The app will usually run at http://localhost:3000 and connect to the backend.
 
 🎯 Internship Context
+
 This project was developed as an Internship Task under the Code Alpha Full Stack Development Program, focusing on:
+
 
 Building a CRUD‑based social media application.
 
+
 Implementing authentication and user interaction flows.
+
 
 Working with real-world API design and MongoDB integration.
 
+
 Improving clean code, folder structure, and documentation.
 
+
 ✅ Future Improvements
+
 Add image upload support for posts.
+
 
 Add notifications / activity feed.
 
+
 Implement search and explore page.
+
 
 Enhance UI with a component library or design system.
 
 📬 Contact
+
 If you have any questions or suggestions, feel free to reach out:
 
 Name: Aathimahalakshmi L
