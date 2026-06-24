@@ -1,4 +1,6 @@
 Social Media Platform – Code Alpha Internship Task
+
+
 📌 Overview
 This is a full stack Social Media Platform built as part of my Code Alpha Full Stack Development Internship.
 It replicates core social media features like posts, likes, comments, profiles, and a follow system, while strengthening my skills in MERN‑style full stack development.
