@@ -6,64 +6,58 @@ require("dotenv").config({ path: path.join(__dirname, ".env") });
 
 const app = express();
 
-// Middleware
+// =====================
+// MIDDLEWARE
+// =====================
 app.use(express.json({ limit: "10mb" }));
-app.use(cors());
-app.use(express.static(path.join(__dirname, "..", "frontend")));
 
-// Connect to MongoDB and seed if available before starting the server
+app.use(cors({
+  origin: "*", // later replace with your Vercel URL for security
+}));
+
+// =====================
+// DATABASE INIT
+// =====================
 const store = require("./dataStore");
 
 async function init() {
-  await connectDB();
   try {
+    await connectDB();
+    console.log("✅ MongoDB connected");
+
     await store.ensureSeed();
+    console.log("✅ Database seeded");
   } catch (err) {
-    console.error("Seeding error:", err);
+    console.error("❌ DB Error:", err.message);
   }
 }
 
-// Routes
+// =====================
+// API ROUTES
+// =====================
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/users", require("./routes/users"));
 app.use("/api/posts", require("./routes/posts"));
 app.use("/api/comments", require("./routes/comments"));
 app.use("/api/follows", require("./routes/follows"));
 
-// Root route
+// =====================
+// HEALTH CHECK ROUTE
+// =====================
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "index.html"));
-});
-
-app.get("/app.js", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "app.js"));
-});
-
-app.get("/style.css", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "frontend", "style.css"));
-});
-
-const requestedPort = Number(process.env.PORT) || 5000;
-
-const startServer = (port) => {
-  const server = app.listen(port, "0.0.0.0", () => {
-    console.log(`Server running on port ${port}`);
+  res.json({
+    message: "Mini Instagram Backend Running 🚀",
+    status: "OK"
   });
+});
 
-  server.on("error", (error) => {
-    if (error.code === "EADDRINUSE") {
-      console.warn(`Port ${port} is busy. Trying ${port + 1}...`);
-      startServer(port + 1);
-      return;
-    }
+// =====================
+// START SERVER
+// =====================
+const PORT = process.env.PORT || 5000;
 
-    console.error(error);
-    process.exit(1);
+init().then(() => {
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
   });
-};
-
-// Start server after init completes (connectDB + seeding)
-init().then(() => startServer(requestedPort)).catch((err) => {
-  console.error("Initialization error:", err);
-  startServer(requestedPort);
 });
